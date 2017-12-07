@@ -15,6 +15,7 @@
 ## Change Log
 12-07-2017 9:40 am - Application has the correct .js links. The data-author attribute was added to thr author element.
 12-07-2017 9:49 am - Changed the concatination to template literal on the option tag
+12-07-2017 12:05 pm - Added author view and category view
 
 ## Credits and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->

@@ -8,12 +8,7 @@ articleView.populateFilters = function() {
     // REVIEW: We can declare several variables at once and assign their values later when using let. Keep in mind that we cannot do this with const.
     let authorName, category, optionTag;
     if (!$(this).hasClass('template')) {
-      // REVIEW: We need to take every author name from the page, and make it an option in the Author filter.
-      // To do so, Build an <option> DOM element that we can append to the author <select> element.
-      // Start by grabbing the author's name from `this` article element, and then use that bit of text to create the option tag (in a variable named `optionTag`) that we can append to the #author-filter select element.
       authorName = $(this).attr('data-author');
-
-      // TODO: Refactor this concatenation using a template literal.
       
       optionTag = `<option value="${authorName}"> ${authorName} </option>`;
       // optionTag = '<option value="' + authorName + '">' + authorName + '</option>';
@@ -38,19 +33,13 @@ articleView.populateFilters = function() {
 
 articleView.handleAuthorFilter = function() {
   $('#author-filter').on('change', function() {
-    // REVIEW: Inside this function, "this" is the element that triggered the event handler function we are defining. "$(this)" is using jQuery to select that element (analogous to event.target that we have seen before), so we can chain jQuery methods onto it.
+
     if ($(this).val()) {
       $('article').hide()
-      $(`article[data-category=${$(this).val()}]`).show()
-      console.log($(this).val(350));
-      // TODO: If the <select> menu was changed to an option that has a value, we first need to hide all the articles, and then show just the ones that match for the author that was selected.
-      // Use an "attribute selector" to find those articles, and fade them in for the reader.
-
+      $(`article[data-author="${$(this).val()}"]`).show();
     } else {
       $('.template').hide();
-      $('#articles').show();
-      // TODO: If the <select> menu was changed to an option that is blank, we should first show all the articles, except the one article we are using as a template.
-
+      $('article').show();
     }
     $('#category-filter').val('');
   });
@@ -61,13 +50,48 @@ articleView.handleCategoryFilter = function() {
   // When an option with a value is selected, hide all the articles, then reveal the matches.
   // When the blank (default) option is selected, show all the articles, except for the template.
   // Be sure to reset the #author-filter while you are at it!
-
+  $('#category-filter').on('change', function() {
+    
+    if ($(this).val()) {
+      $('article').hide()
+      $(`article[data-category="${$(this).val()}"]`).show();
+    } else {
+      $('.template').hide();
+      $('article').show();
+    }
+    $('#category-filter').val('');
+  });
 };
 
 articleView.handleMainNav = function() {
   // TODO: Add an event handler to .main-nav elements that will power the Tabs feature.
   // Clicking any .tab element should hide all the .tab-content sections, and then reveal the single .tab-content section that is associated with the clicked .tab element.
   // So: You need to dynamically build a selector string with the correct ID, based on the data available to you on the .tab element that was clicked.
+// TAB BASED NAVIGATION
+  // $('header a').on('click', function(e) {
+  // // e.preventDefault(); // if needed
+  //   console.log(e.target);
+  // $('.tab-content').hide(350)
+
+  // $('.icon-home').on('click', 'li', function() {
+  //   console.log('clicked this', this)
+  //   console.log('scott was not here');
+  // })
+
+  // $('#articles').show();
+  // console.log('vanilla this', this)
+
+  // console.log('jquery this', $(this))
+  // as a getter these work the same
+  // console.log($(this).children().data('tab'))
+  // console.log($(this).children().attr('data-tab'))
+
+    
+
+
+    // $('#' + selection).show()
+    // $(`#${$(this).data('tab')}`).show(350)
+  // })
 
   // REVIEW: Now trigger a click on the first .tab element, to set up the page.
   $('.main-nav .tab:first').click();
@@ -85,4 +109,6 @@ articleView.setTeasers = function() {
 $(document).ready(function() {
   articleView.populateFilters();
   articleView.handleAuthorFilter();
+  articleView.handleCategoryFilter();
+  // articleView.handleMainNav();
 })
