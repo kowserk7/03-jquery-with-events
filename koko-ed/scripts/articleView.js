@@ -68,30 +68,13 @@ articleView.handleMainNav = function() {
   // Clicking any .tab element should hide all the .tab-content sections, and then reveal the single .tab-content section that is associated with the clicked .tab element.
   // So: You need to dynamically build a selector string with the correct ID, based on the data available to you on the .tab element that was clicked.
 // TAB BASED NAVIGATION
-  // $('header a').on('click', function(e) {
-  // // e.preventDefault(); // if needed
-  //   console.log(e.target);
-  // $('.tab-content').hide(350)
 
-  // $('.icon-home').on('click', 'li', function() {
-  //   console.log('clicked this', this)
-  //   console.log('scott was not here');
-  // })
-
-  // $('#articles').show();
-  // console.log('vanilla this', this)
-
-  // console.log('jquery this', $(this))
-  // as a getter these work the same
-  // console.log($(this).children().data('tab'))
-  // console.log($(this).children().attr('data-tab'))
-
-    
-
-
-    // $('#' + selection).show()
-    // $(`#${$(this).data('tab')}`).show(350)
-  // })
+  $('.tab').on('click', function() {
+    console.log('clicked this', this)
+    $('.tab-content').hide();
+    //$(`#${$(this).data('.data-content')}`).show();
+    $(`#${$(this).data('content')}`).show()
+  })
 
   // REVIEW: Now trigger a click on the first .tab element, to set up the page.
   $('.main-nav .tab:first').click();
@@ -101,8 +84,13 @@ articleView.setTeasers = function() {
   // REVIEW: Hide elements beyond the first 2 in any article body.
   $('.article-body *:nth-of-type(n+2)').hide();
 
-  // TODO: Add an event handler to reveal all the hidden elements, when the .read-on link is clicked. You can go ahead and hide the "Read On" link once it has been clicked. Be sure to prevent the default link-click action!
-  // Ideally, we'd attach this as just one event handler on the #articles section, and let it process (in other words... delegate) any .read-on clicks that happen within child nodes.
+  $('.read-on').on('click', function(e) {
+    e.preventDefault();
+    var pEl = $(this)[0].parentElement;
+    $(pEl).addClass('clicked');
+    console.log(pEl);
+    $('.clicked *:nth-of-type(n+2)').show();
+  });
 };
 
 // TODO: Call all of the above functions, once we are sure the DOM is ready.
@@ -110,5 +98,6 @@ $(document).ready(function() {
   articleView.populateFilters();
   articleView.handleAuthorFilter();
   articleView.handleCategoryFilter();
-  // articleView.handleMainNav();
+  articleView.handleMainNav();
+  articleView.setTeasers();
 })
