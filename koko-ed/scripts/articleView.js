@@ -68,30 +68,13 @@ articleView.handleMainNav = function() {
   // Clicking any .tab element should hide all the .tab-content sections, and then reveal the single .tab-content section that is associated with the clicked .tab element.
   // So: You need to dynamically build a selector string with the correct ID, based on the data available to you on the .tab element that was clicked.
 // TAB BASED NAVIGATION
-  // $('header a').on('click', function(e) {
-  // // e.preventDefault(); // if needed
-  //   console.log(e.target);
-  // $('.tab-content').hide(350)
 
-  // $('.icon-home').on('click', 'li', function() {
-  //   console.log('clicked this', this)
-  //   console.log('scott was not here');
-  // })
-
-  // $('#articles').show();
-  // console.log('vanilla this', this)
-
-  // console.log('jquery this', $(this))
-  // as a getter these work the same
-  // console.log($(this).children().data('tab'))
-  // console.log($(this).children().attr('data-tab'))
-
-    
-
-
-    // $('#' + selection).show()
-    // $(`#${$(this).data('tab')}`).show(350)
-  // })
+  $('.tab').on('click', function() {
+    console.log('clicked this', this)
+    $('.tab-content').hide();
+    //$(`#${$(this).data('.data-content')}`).show();
+    $(`#${$(this).data('content')}`).show()
+  })
 
   // REVIEW: Now trigger a click on the first .tab element, to set up the page.
   $('.main-nav .tab:first').click();
@@ -110,5 +93,6 @@ $(document).ready(function() {
   articleView.populateFilters();
   articleView.handleAuthorFilter();
   articleView.handleCategoryFilter();
-  // articleView.handleMainNav();
+  articleView.handleMainNav();
+  articleView.setTeasers();
 })
